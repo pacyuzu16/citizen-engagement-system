@@ -28,3 +28,21 @@ exports.updateComplaint = async (req, res) => {
     res.status(500).json({ message: 'Error updating complaint' });
   }
 };
+// ... existing imports and code ...
+
+exports.getAnalytics = async (req, res) => {
+    try {
+      const byCategory = await Complaint.aggregate([
+        { $group: { _id: '$category', count: { $sum: 1 } } }
+      ]);
+      const byStatus = await Complaint.aggregate([
+        { $group: { _id: '$status', count: { $sum: 1 } } }
+      ]);
+      const byAgency = await Complaint.aggregate([
+        { $group: { _id: '$agency', count: { $sum: 1 } } }
+      ]);
+      res.json({ byCategory, byStatus, byAgency });
+    } catch (err) {
+      res.status(500).json({ message: 'Error fetching analytics' });
+    }
+  };

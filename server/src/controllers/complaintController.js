@@ -3,18 +3,25 @@ const { v4: uuidv4 } = require('uuid');
 
 // Simple categorization based on keywords
 const categorizeComplaint = (description) => {
-  const keywords = {
-    Infrastructure: ['road', 'pothole', 'street'],
-    Health: ['hospital', 'clinic', 'medicine'],
-    Sanitation: ['garbage', 'waste', 'clean']
-  };
-  for (const [category, words] of Object.entries(keywords)) {
-    if (words.some(word => description.toLowerCase().includes(word))) {
-      return { category, agency: `${category} Department` };
+    const keywords = {
+      Infrastructure: { words: ['road', 'pothole', 'street', 'bridge', 'sidewalk'], priority: 3 },
+      Health: { words: ['hospital', 'clinic', 'medicine', 'doctor', 'healthcare'], priority: 2 },
+      Sanitation: { words: ['garbage', 'waste', 'clean', 'sewage', 'trash'], priority: 2 },
+      Education: { words: ['school', 'teacher', 'education', 'classroom'], priority: 1 },
+      General: { words: [], priority: 0 } // Default
+    };
+  
+    let bestMatch = { category: 'General', agency: 'General Services', priority: -1 };
+    const desc = description.toLowerCase();
+  
+    for (const [category, { words, priority }] of Object.entries(keywords)) {
+      if (words.some(word => desc.includes(word)) && priority > bestMatch.priority) {
+        bestMatch = { category, agency: `${category} Department`, priority };
+      }
     }
-  }
-  return { category: 'General', agency: 'General Services' };
-};
+  
+    return bestMatch;
+  };
 
 // Submit a complaint
 exports.submitComplaint = async (req, res) => {
@@ -54,3 +61,17 @@ exports.trackStatus = async (req, res) => {
     res.status(500).json({ message: 'Error tracking complaint' });
   }
 };
+
+// ... existing imports and code ...
+
+exports.getUserComplaints = async (req, res) => {
+    const { contact } = req.query; // Get contact from query params
+    try {
+      const complaints = await Complaint.find({ 'userInfo.contact': contact })
+        .sort({ createdAt: -1 }) // Sort by newest first
+        .limit(10); // Limit to 10 recent complaints
+      res.json(complaints);
+    } catch (err) {
+      res.status(500).json({ message: 'Error fetching complaints' });
+    }
+  };
