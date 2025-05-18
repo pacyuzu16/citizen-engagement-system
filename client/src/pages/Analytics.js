@@ -11,7 +11,7 @@ function Analytics() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:5000/api/admin/analytics', {
+    axios.get('http://citizen-engagement-backend.onrender.com/api/admin/analytics', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => setAnalytics(response.data))
