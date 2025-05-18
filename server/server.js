@@ -7,8 +7,9 @@ dotenv.config();
 
 const app = express();
 
+// Allow all origins for debugging
 app.use(cors({
-  origin: 'https://citizen-engagement-system.vercel.app',
+  origin: '*', // Temporary for debugging
   credentials: true
 }));
 
