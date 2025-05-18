@@ -22,7 +22,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:5000/api/admin/complaints', {
+    axios.get('https://citizen-engagement-backend.onrender.com/api/admin/complaints', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => setComplaints(response.data))
@@ -30,7 +30,7 @@ function AdminDashboard() {
         console.error('Error:', err);
         toast.error('Failed to fetch complaints');
       });
-    axios.get('http://localhost:5000/api/admin/users', {
+    axios.get('http://citizen-engagement-backend.onrender.com/api/admin/users', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => setUsers(response.data))
@@ -44,13 +44,13 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/admin/complaints/${updateForm.id}`, {
+      await axios.patch(`http://citizen-engagement-backend.onrender.com/api/admin/complaints/${updateForm.id}`, {
         status: updateForm.status,
         response: updateForm.response
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const response = await axios.get('http://localhost:5000/api/admin/complaints', {
+      const response = await axios.get('http://citizen-engagement-backend.onrender.com/api/admin/complaints', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
@@ -67,7 +67,7 @@ function AdminDashboard() {
     setConfirmAction(() => async () => {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/admin/complaints/${id}`, {
+        await axios.delete(`http://citizen-engagement-backend.onrender.com/api/admin/complaints/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setComplaints(complaints.filter(complaint => complaint._id !== id));
@@ -87,7 +87,7 @@ function AdminDashboard() {
     setConfirmAction(() => async () => {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+        await axios.delete(`http://citizen-engagement-backend.onrender.com/api/admin/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUsers(users.filter(user => user._id !== id));
@@ -111,13 +111,13 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/admin/users/${editUserForm.id}`, {
+      await axios.patch(`http://citizen-engagement-backend.onrender.com/api/admin/users/${editUserForm.id}`, {
         email: editUserForm.email,
         role: editUserForm.role
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const response = await axios.get('http://localhost:5000/api/admin/users', {
+      const response = await axios.get('http://citizen-engagement-backend.onrender.com/api/admin/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);
@@ -133,7 +133,7 @@ function AdminDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/admin/users/${passwordForm.id}/password`, {
+      await axios.patch(`http://citizen-engagement-backend.onrender.com/api/admin/users/${passwordForm.id}/password`, {
         password: passwordForm.password
       }, {
         headers: { Authorization: `Bearer ${token}` }
