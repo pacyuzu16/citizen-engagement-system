@@ -6,7 +6,13 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow requests from the Vercel frontend
+app.use(cors({
+  origin: 'https://citizen-engagement-system.vercel.app',
+  credentials: true
+}));
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
