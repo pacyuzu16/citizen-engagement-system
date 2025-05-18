@@ -13,7 +13,7 @@ function Dashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/api/complaints?email=${email}`, {
+      const response = await axios.get(`http://citizen-engagement-backend.onrender.com/api/complaints?email=${email}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
@@ -27,7 +27,7 @@ function Dashboard() {
   const handleCancelComplaint = async (complaintId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/complaints/${complaintId}`, {
+      await axios.delete(`http://citizen-engagement-backend.onrender.com/api/complaints/${complaintId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Remove the canceled complaint from the state
