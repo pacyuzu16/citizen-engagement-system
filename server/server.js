@@ -7,7 +7,6 @@ dotenv.config();
 
 const app = express();
 
-// Configure CORS to allow requests from the Vercel frontend
 app.use(cors({
   origin: 'https://citizen-engagement-system.vercel.app',
   credentials: true
@@ -23,7 +22,6 @@ app.use('/api/complaints', require('./src/routes/complaintRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/auth', require('./src/routes/authRoutes'));
 
-// Global error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong on the server. Please try again later.' });
