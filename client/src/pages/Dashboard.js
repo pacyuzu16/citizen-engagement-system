@@ -13,7 +13,7 @@ function Dashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://citizen-engagement-backend.onrender.com/api/complaints?email=${email}`, {
+      const response = await axios.get(`https://citizen-engagement-system.onrender.com/api/complaints/user/complaints?contact=${contact}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
