@@ -24,7 +24,16 @@ function Login() {
       navigate(response.data.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       console.error('Login error:', err);
-      toast.error('Error logging in. Please try again.');
+      if (err.response) {
+        // Server responded with a status code outside 2xx
+        toast.error(err.response.data.message || 'Error logging in. Please try again.');
+      } else if (err.request) {
+        // Request was made but no response received
+        toast.error('No response from server. Please check your connection.');
+      } else {
+        // Error setting up the request
+        toast.error('Error: ' + err.message);
+      }
     }
   };
 

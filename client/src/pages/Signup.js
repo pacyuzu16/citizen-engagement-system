@@ -25,7 +25,13 @@ function Signup() {
       navigate(response.data.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       console.error('Signup error:', err);
-      toast.error('Signup failed. Please try again.');
+      if (err.response) {
+        toast.error(err.response.data.message || 'Signup failed. Please try again.');
+      } else if (err.request) {
+        toast.error('No response from server. Please check your connection.');
+      } else {
+        toast.error('Error: ' + err.message);
+      }
     }
   };
 
