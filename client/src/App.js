@@ -44,7 +44,7 @@ function AppContent() {
     <>
       <Navbar bg="primary" variant="dark" expand="lg" style={{ background: 'linear-gradient(90deg, #007bff, #00c4cc)' }}>
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand>
             <FontAwesomeIcon icon={faHome} className="me-2" />
             Citizen Engagement System
           </Navbar.Brand>
